@@ -1,0 +1,86 @@
+{
+  "name": "TIMER0",
+  "description": "A fake 32-bit timer peripheral used to exercise the register-map generator.",
+  "base_address": "0x40001000",
+  "registers": [
+    {
+      "name": "CTRL",
+      "offset": "0x00",
+      "access": "rw",
+      "reset": "0x00000300",
+      "description": "Control register.",
+      "fields": [
+        { "name": "EN",       "bits": "0",    "description": "Timer enable." },
+        { "name": "MODE",     "bits": "2:1",  "description": "0 = one-shot, 1 = periodic, 2 = free-running." },
+        { "name": "IRQ_EN",   "bits": "3",    "description": "Interrupt enable." },
+        { "name": "PRESCALE", "bits": "15:8", "description": "Clock divider minus one." }
+      ]
+    },
+    {
+      "name": "STATUS",
+      "offset": "0x04",
+      "access": "ro",
+      "reset": "0x00000001",
+      "description": "Status register.",
+      "fields": [
+        { "name": "READY",   "bits": "0", "description": "Peripheral is out of reset and ready." },
+        { "name": "RUNNING", "bits": "1", "description": "Counter is running." }
+      ]
+    },
+    {
+      "name": "INT_STATUS",
+      "offset": "0x08",
+      "access": "w1c",
+      "reset": "0x00000000",
+      "description": "Interrupt flags. Write 1 to a bit to clear it.",
+      "fields": [
+        { "name": "OVF",   "bits": "0", "description": "Counter overflowed." },
+        { "name": "MATCH", "bits": "1", "description": "Counter reached COMPARE." }
+      ]
+    },
+    {
+      "name": "COUNT",
+      "offset": "0x0C",
+      "access": "ro",
+      "reset": "0x00000000",
+      "description": "Current counter value.",
+      "fields": [
+        { "name": "VALUE", "bits": "31:0", "description": "Counter value." }
+      ]
+    },
+    {
+      "name": "COMPARE",
+      "offset": "0x10",
+      "access": "rw",
+      "reset": "0xFFFFFFFF",
+      "description": "Compare value. MATCH is raised when COUNT equals this.",
+      "fields": [
+        { "name": "VALUE", "bits": "31:0", "description": "Compare value." }
+      ]
+    },
+    {
+      "name": "CMD",
+      "offset": "0x14",
+      "access": "wo",
+      "reset": "0x00000000",
+      "description": "Command register. Reads return 0.",
+      "fields": [
+        { "name": "START",  "bits": "0", "description": "Start counting." },
+        { "name": "STOP",   "bits": "1", "description": "Stop counting." },
+        { "name": "RELOAD", "bits": "2", "description": "Reset COUNT to 0." }
+      ]
+    },
+    {
+      "name": "ID",
+      "offset": "0x1C",
+      "access": "ro",
+      "reset": "0x7E1A0102",
+      "description": "Identification register.",
+      "fields": [
+        { "name": "MINOR", "bits": "7:0",   "description": "Minor revision." },
+        { "name": "MAJOR", "bits": "15:8",  "description": "Major revision." },
+        { "name": "PART",  "bits": "31:16", "description": "Part number." }
+      ]
+    }
+  ]
+}
